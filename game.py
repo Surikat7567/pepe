@@ -8,7 +8,28 @@ fps = 25  # if it`s more than 45 is superfluous frames
 bg = pygame.image.load('Assets/bg.bmp')
 cb = pygame.image.load('Assets/02.bmp') #card`s back (rubaha)
 cf1 = pygame.image.load('Assets/11.bmp') #card`s face (front) pic`s res == 67 x 100
-position_of_The_RedKing = (90,50)
+rcf = pygame.image.load('Assets/11.bmp') #red card`s face (front) pic`s res == 80 x 120
+bcf = pygame.image.load('Assets/blue.bmp')
+gcf = pygame.image.load('Assets/green.bmp')
+pcf = pygame.image.load('Assets/pink.bmp')
+wcf = pygame.image.load('Assets/white.bmp')
+winner_screen = pygame.image.load('Assets/win_win.bmp')
+position_of_The_Red1 = (141,25)
+position_of_The_Red2 = (445,165)
+Blue_position1 = (233,165)
+Blue_position2 = (405,328)
+Green_position1 = (273,25)
+Green_position2 = (537,25)
+Pink_position1 = (141,328)
+Pink_position2 = (537, 328)
+White_position1 = (405,25)
+White_position2 = (280,328)
+click_counter = 0 # counts card clicks to prevent more than two face-up cards from being on the field
+Red_Cards_Aktivated = 0 
+Green_Cards_Aktivated = 0 
+White_Cards_Aktivated = 0
+Blue_Cards_Aktivated = 0 
+Pink_Cards_Aktivated = 0
 
 class Card:
     def __init__(self, position, cf, status): #cf == card`s face
@@ -34,7 +55,16 @@ class Card:
         
         print(self.status)
         
-RedKingCard = Card(position_of_The_RedKing, cf1, '1')
+RedCard1 = Card(position_of_The_Red1, rcf, '1')
+RedCard2 = Card(position_of_The_Red2, rcf, '1')
+GreenCard1 = Card(Green_position1, gcf, '1')
+GreenCard2 = Card(Green_position2, gcf, '1')
+BlueCard1 = Card(Blue_position1, bcf, '1')
+BlueCard2 = Card(Blue_position2, bcf, '1')
+PinkCard1 = Card(Pink_position1, pcf, '1')
+PinkCard2 = Card(Pink_position2, pcf, '1')
+WhiteCard1 = Card(White_position1, wcf, '1')
+WhiteCard2 = Card(White_position2, wcf, '1')
 
 while True:
     for event in pygame.event.get():
@@ -42,10 +72,87 @@ while True:
         sc.blit(bg, (0,0))
         if event.type == pygame.QUIT:
             exit()
-        elif event.type ==  pygame.MOUSEBUTTONDOWN:
-            RedKingCard.status_change_on_active()
-        RedKingCard.status_check()
-    RedKingCard.current_sts()
+        elif event.type == pygame.MOUSEBUTTONDOWN and (position_of_The_Red1 < pygame.mouse.get_pos() < (221, 145)):
+            RedCard1.status_change_on_active()
+            click_counter += 1
+            
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and (Green_position1 < pygame.mouse.get_pos() < (353,145)):
+            GreenCard1.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and Green_position2 < pygame.mouse.get_pos() < (617,145):
+            GreenCard2.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and position_of_The_Red2 < pygame.mouse.get_pos() < (525, 285):
+            RedCard2.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and Blue_position1 < pygame.mouse.get_pos() < (313,300):
+            BlueCard1.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and Blue_position2 < pygame.mouse.get_pos() < (485,448):
+            BlueCard1.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and Pink_position1 < pygame.mouse.get_pos() < (221,475):
+            PinkCard1.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and Pink_position2 < pygame.mouse.get_pos() < (617, 240):
+            PinkCard2.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and White_position1 < pygame.mouse.get_pos() < (480, 145):
+            WhiteCard1.status_change_on_active()
+            click_counter += 1
+
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and White_position2 < pygame.mouse.get_pos() < (360, 448):
+            WhiteCard2.status_change_on_active()
+            click_counter += 1
+
+
+        if click_counter >= 3:
+            RedCard1.status_change_on_passive()
+            RedCard2.status_change_on_passive()
+            GreenCard1.status_change_on_passive()
+            GreenCard2.status_change_on_passive()
+            BlueCard1.status_change_on_passive()
+            BlueCard2.status_change_on_passive()
+            PinkCard1.status_change_on_passive()
+            PinkCard2.status_change_on_passive()
+            WhiteCard1.status_change_on_passive()
+            WhiteCard2.status_change_on_passive()
+            click_counter = 0
+
+        RedCard1.status_check()
+        RedCard2.status_check()
+        GreenCard1.status_check()
+        GreenCard2.status_check()
+        BlueCard1.status_check()
+        BlueCard2.status_check()
+        PinkCard1.status_check()
+        PinkCard2.status_check()
+        WhiteCard1.status_check()            
+        WhiteCard2.status_check()
+        
+        if RedCard1.status and RedCard2.status == 'active':
+            Red_Cards_Aktivated = 1
+        elif GreenCard1.status and GreenCard2.status == 'active':
+            Green_Cards_Aktivated = 1
+        elif WhiteCard1.status and WhiteCard2.status == 'active':
+            White_Cards_Aktivated = 1
+        elif PinkCard1.status and PinkCard2 == 'active':
+            Pink_Cards_Aktivated = 1      
+        elif BlueCard1.status and BlueCard2.status == 'active':
+            Blue_Cards_Aktivated = 1
+
+        if Red_Cards_Aktivated and Green_Cards_Aktivated and White_Cards_Aktivated and Blue_Cards_Aktivated and Pink_Cards_Aktivated == 1:
+            sc.blit(winner_screen, (0,0))
+            pygame.time.wait(10000)
+        print(pygame.mouse.get_pos())
+    #RedKingCard.current_sts()
     clock.tick(14)
     pygame.display.flip()
     

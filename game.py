@@ -6,7 +6,7 @@ pygame.mixer.pre_init(44100, -16, 1, 512)
 sc = pygame.display.set_mode((1200,750)) # if it`s more than 900p is superfluous frames
 clock = pygame.time.Clock()
 fps = 25  # if it`s more than 30 is superfluous frames
-bg = pygame.image.load('Assets/bg.png')
+bg = pygame.image.load('Assets/00.png')
 cb = pygame.image.load('Assets/02.png') #card`s back (rubaha)
 rcf = pygame.image.load('Assets/11.png') #red card`s face (front) pic`s res == 80 x 120
 bcf = pygame.image.load('Assets/blue.jpg')
